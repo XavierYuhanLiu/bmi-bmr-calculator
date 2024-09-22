@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI and BMR Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .calculator {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+    h1 {
+        text-align: center;
+    }
+    label, input, button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+    input, button {
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    button {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #4cae4c;
+    }
+    #results {
+        margin-top: 20px;
+    }
+    #results p {
+        font-size: 16px;
+        color: #333;
+    }
+</style>
+<script>
+function calculateBMI(weight, height) {
+    return weight / ((height / 100) ** 2);
+}
+
+function calculateBMR(gender, weight, height, age) {
+    let bmr;
+    if (gender.toLowerCase() === 'female') {
+        bmr = 655 + (9.6 * weight) + (1.7 * height) - (4.7 * age);
+    } else {
+        bmr = 66 + (13.7 * weight) + (5.0 * height) - (6.8 * age);
+    }
+    return bmr;
+}
+
+function calculate() {
+    const gender = document.querySelector('input[name="gender"]:checked').value;
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value);
+    const age = parseInt(document.getElementById('age').value, 10);
+
+    const bmi = calculateBMI(weight, height);
+    const bmr = calculateBMR(gender, weight, height, age);
+
+    document.getElementById('bmiResult').textContent = `BMI: ${bmi.toFixed(2)}`;
+    document.getElementById('bmrResult').textContent = `BMR: ${bmr.toFixed(2)}`;
+}
+</script>
+</head>
+<body>
+<div class="calculator">
+    <h1>BMI and BMR Calculator</h1>
+    <form id="calculatorForm">
+        <p>Gender:</p>
+        <label>
+            <input type="radio" name="gender" value="male" checked> Male
+        </label>
+        <label>
+            <input type="radio" name="gender" value="female"> Female
+        </label><br><br>
+        <label for="weight">Weight (Kg):</label>
+        <input type="number" id="weight" name="weight" step="0.01" required><br><br>
+        <label for="height">Height (cm):</label>
+        <input type="number" id="height" name="height" step="0.01" required><br><br>
+        <label for="age">Age (years):</label>
+        <input type="number" id="age" name="age" required><br><br>
+        <button type="button" onclick="calculate()">Calculate</button>
+    </form>
+
+    <div id="results">
+        <p id="bmiResult">BMI: </p>
+        <p id="bmrResult">BMR: </p>
+    </div>
+</div>
+</body>
+</html>
