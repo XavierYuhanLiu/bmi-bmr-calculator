@@ -1,0 +1,1 @@
+This is a website which can calculate BMI and BMR. It is open source and deployed on GitHub Pages. If you are interested, you are welcome to use it. Note: BMR refers to the number of calories consumed in a resting state per day.
